@@ -18,8 +18,6 @@ public class User {
 
     private String password;
 
-    private Double price;
-
     @Enumerated(value = EnumType.STRING)
     private RoleType role;
 

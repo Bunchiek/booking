@@ -1,7 +1,7 @@
 package com.example.booking.service.impl;
 
 import com.example.booking.entity.Room;
-import com.example.booking.exception.HotelNotFoundException;
+import com.example.booking.exception.EntityNotFoundException;
 import com.example.booking.repository.RoomRepository;
 import com.example.booking.service.RoomService;
 import com.example.booking.utils.BeanUtils;
@@ -18,7 +18,7 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public Room findById(Long id) {
         return repository.findById(id).orElseThrow(()->
-                new HotelNotFoundException(MessageFormat.format("Комната с ID {0} не найдена!",id)));
+                new EntityNotFoundException(MessageFormat.format("Комната с ID {0} не найдена!",id)));
     }
 
     @Override

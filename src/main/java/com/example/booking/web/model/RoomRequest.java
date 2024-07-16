@@ -12,16 +12,10 @@ import java.time.Instant;
 public class RoomRequest {
 
     private String name;
-
     private String description;
-
     private Integer number;
-
     private Double price;
-
     private Integer capacity;
-
     private Instant unavailableFrom;
-
     private Instant unavailableTo;
 }

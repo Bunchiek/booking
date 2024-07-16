@@ -1,6 +1,6 @@
 package com.example.booking.web.controller;
 
-import com.example.booking.exception.HotelNotFoundException;
+import com.example.booking.exception.EntityNotFoundException;
 import com.example.booking.exception.ServerErrorException;
 import com.example.booking.web.model.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -18,8 +18,8 @@ import java.util.List;
 @RestControllerAdvice
 public class ExceptionHandlerController {
 
-    @ExceptionHandler(HotelNotFoundException.class)
-    public ResponseEntity<ErrorResponse> notFound(HotelNotFoundException ex) {
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<ErrorResponse> notFound(EntityNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(ex.getLocalizedMessage()));
     }
 
