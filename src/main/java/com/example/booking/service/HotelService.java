@@ -1,7 +1,6 @@
 package com.example.booking.service;
 
 import com.example.booking.entity.Hotel;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

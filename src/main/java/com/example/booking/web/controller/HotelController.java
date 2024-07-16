@@ -19,10 +19,6 @@ public class HotelController {
     private final HotelService hotelService;
     private final HotelMapper hotelMapper;
 
-    @GetMapping
-    public ResponseEntity<HotelListResponse> findAll() {
-        return ResponseEntity.ok(hotelMapper.hotelListToListResponse(hotelService.findAll()));
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<HotelResponse> findById(@PathVariable long id) {

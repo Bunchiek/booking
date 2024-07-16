@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class HotelResponse {
 
+    private String id;
     private String name;
     private String title;
     private String city;
