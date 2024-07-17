@@ -1,12 +1,17 @@
 package com.example.booking.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
-import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
-@Entity
+
+@Entity(name = "users")
 @Getter
+@Setter
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,5 +25,9 @@ public class User {
 
     @Enumerated(value = EnumType.STRING)
     private RoleType role;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Booking> bookings = new ArrayList<>();
 
 }

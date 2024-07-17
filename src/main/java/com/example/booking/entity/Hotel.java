@@ -1,10 +1,17 @@
 package com.example.booking.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
-@Entity
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity(name = "hotel")
 @Getter
+@Setter
 public class Hotel {
 
     @Id
@@ -23,4 +30,8 @@ public class Hotel {
 
     @Column(name = "count_review")
     private Integer countReview;
+
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Room> rooms = new ArrayList<>();
 }
