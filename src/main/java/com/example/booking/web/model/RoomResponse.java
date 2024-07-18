@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -23,7 +24,7 @@ public class RoomResponse {
 
     private Integer capacity;
 
-    private Instant unavailableFrom;
+    private LocalDate unavailableFrom;
 
-    private Instant unavailableTo;
+    private LocalDate unavailableTo;
 }

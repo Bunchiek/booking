@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,10 +30,10 @@ public class Room {
     private Integer capacity;
 
     @Column(name = "data_unavailable_from")
-    private Instant unavailableFrom;
+    private LocalDate unavailableFrom;
 
     @Column(name = "data_unavailable_to")
-    private Instant unavailableTo;
+    private LocalDate unavailableTo;
 
     @ManyToOne
     @JoinColumn(name = "hotel_id")
