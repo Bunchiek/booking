@@ -1,5 +1,6 @@
 package com.example.booking.service.impl;
 
+import com.example.booking.entity.RoleType;
 import com.example.booking.entity.User;
 import com.example.booking.exception.EntityNotFoundException;
 import com.example.booking.repository.UserRepository;
@@ -28,7 +29,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User save(User user) {
+    public User save(User user, RoleType roleType) {
+        user.setRole(roleType);
         return repository.save(user);
     }
 

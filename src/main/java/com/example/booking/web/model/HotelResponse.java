@@ -1,9 +1,11 @@
 package com.example.booking.web.model;
 
-import jakarta.persistence.Column;
+import com.example.booking.entity.Room;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -16,6 +18,7 @@ public class HotelResponse {
     private String city;
     private String address;
     private Integer distanceFromCityCenter;
-    private Integer rating;
+    private Double rating;
     private Integer countReview;
+    private List<Room> rooms;
 }

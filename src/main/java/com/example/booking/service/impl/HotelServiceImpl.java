@@ -3,9 +3,12 @@ package com.example.booking.service.impl;
 import com.example.booking.entity.Hotel;
 import com.example.booking.exception.EntityNotFoundException;
 import com.example.booking.repository.HotelRepository;
+import com.example.booking.repository.HotelSpecification;
 import com.example.booking.service.HotelService;
 import com.example.booking.utils.BeanUtils;
+import com.example.booking.web.model.filter.HotelFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
@@ -17,6 +20,12 @@ public class HotelServiceImpl implements HotelService {
 
     private final HotelRepository repository;
 
+
+    @Override
+    public List<Hotel> filterBy(HotelFilter filter) {
+        return repository.findAll(HotelSpecification.withFilter(filter),
+                PageRequest.of(filter.getPageNumber(), filter.getPageSize())).getContent();
+    }
 
     @Override
     public List<Hotel> findAll() {

@@ -2,7 +2,6 @@ package com.example.booking.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,7 +25,7 @@ public class Hotel {
     @Column(name = "distance_from_city_center")
     private Integer distanceFromCityCenter;
 
-    private Integer rating;
+    private Double rating;
 
     @Column(name = "count_review")
     private Integer countReview;
