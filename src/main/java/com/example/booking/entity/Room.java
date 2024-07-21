@@ -10,6 +10,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity(name = "rooms")
 @Getter
@@ -29,11 +30,13 @@ public class Room {
 
     private Integer capacity;
 
-    @Column(name = "data_unavailable_from")
-    private LocalDate unavailableFrom;
 
-    @Column(name = "data_unavailable_to")
-    private LocalDate unavailableTo;
+    @ManyToMany
+    @JoinTable(name = "room_date",
+    joinColumns = @JoinColumn(name = "room_id"),
+    inverseJoinColumns = @JoinColumn(name = "date_id"))
+    @JsonManagedReference
+    private Set<UnavailableDates> dateSet;
 
     @ManyToOne
     @JoinColumn(name = "hotel_id")

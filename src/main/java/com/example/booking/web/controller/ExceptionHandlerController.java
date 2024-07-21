@@ -1,5 +1,6 @@
 package com.example.booking.web.controller;
 
+import com.example.booking.exception.AlreadyExistsException;
 import com.example.booking.exception.EntityNotFoundException;
 import com.example.booking.exception.ServerErrorException;
 import com.example.booking.web.model.ErrorResponse;
@@ -26,6 +27,11 @@ public class ExceptionHandlerController {
     @ExceptionHandler(ServerErrorException.class)
     public ResponseEntity<ErrorResponse> serverError(ServerErrorException ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse(ex.getLocalizedMessage()));
+    }
+
+    @ExceptionHandler(AlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> alreadyExist(AlreadyExistsException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(ex.getLocalizedMessage()));
     }
 
 //    @ExceptionHandler(IncorrectUserException.class)

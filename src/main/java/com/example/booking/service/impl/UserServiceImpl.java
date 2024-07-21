@@ -7,6 +7,7 @@ import com.example.booking.repository.UserRepository;
 import com.example.booking.service.UserService;
 import com.example.booking.utils.BeanUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
@@ -16,6 +17,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public List<User> findAll() {
@@ -31,6 +33,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User save(User user, RoleType roleType) {
         user.setRole(roleType);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return repository.save(user);
     }
 
@@ -50,6 +53,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByUsername(String username) {
+        User user = repository.findByUsername(username).orElseThrow();
         return repository.findByUsername(username).orElseThrow(()->
                 new EntityNotFoundException(MessageFormat.format("Пользователь с именем {0} не найден!",username)));
     }

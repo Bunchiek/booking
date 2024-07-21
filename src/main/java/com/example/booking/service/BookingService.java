@@ -10,5 +10,5 @@ import java.util.List;
 public interface BookingService {
 
     BookingResponse save(BookingRequest request);
-    BookingListResponse findAll();
+    List<Booking> findAll();
 }

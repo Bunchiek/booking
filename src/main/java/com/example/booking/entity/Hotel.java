@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +26,10 @@ public class Hotel {
     @Column(name = "distance_from_city_center")
     private Integer distanceFromCityCenter;
 
-    private Double rating;
+    private Double rating = 0.0;
 
     @Column(name = "count_review")
-    private Integer countReview;
+    private Integer countReview = 0;
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
     @JsonManagedReference

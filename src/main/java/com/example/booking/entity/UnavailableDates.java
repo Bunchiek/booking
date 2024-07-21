@@ -1,31 +1,31 @@
 package com.example.booking.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.Set;
 
-@Entity(name = "bookings")
+@Entity(name = "unavailable_dates")
 @Getter
 @Setter
-public class Booking {
+public class UnavailableDates {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "checkIn_Date")
     private LocalDate checkInDate;
+
+    @Column(name = "checkOut_Date")
     private LocalDate checkOutDate;
 
-    @ManyToOne
-    @JoinColumn(name = "room_id")
+    @ManyToMany(mappedBy = "dateSet")
     @JsonBackReference
-    private Room room;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    @JsonBackReference
-    private User user;
+    private Set<Room> roomSet;
 
 }

@@ -7,6 +7,7 @@ import com.example.booking.service.HotelService;
 import com.example.booking.web.model.HotelListResponse;
 import com.example.booking.web.model.HotelRequest;
 import com.example.booking.web.model.HotelResponse;
+import com.example.booking.web.model.filter.HotelFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,14 +22,21 @@ public class HotelController {
     private final HotelService hotelService;
     private final HotelMapper hotelMapper;
 
+
+    @GetMapping("/filter")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
+    public ResponseEntity<HotelListResponse> filterBy(HotelFilter filter) {
+        return ResponseEntity.ok(hotelMapper.hotelListToListResponse(hotelService.filterBy(filter)));
+    }
+
     @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     public ResponseEntity<HotelListResponse> findAll() {
         return ResponseEntity.ok(hotelMapper.hotelListToListResponse(hotelService.findAll()));
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     public ResponseEntity<HotelResponse> findById(@PathVariable long id) {
         return ResponseEntity.ok(hotelMapper.hotelToResponse(hotelService.findById(id)));
     }
@@ -55,12 +63,16 @@ public class HotelController {
     }
 
     @PutMapping("/rate/{id}")
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     public ResponseEntity<HotelResponse> rateHotel(@PathVariable("id") Long hotelId, @RequestParam Double rate) {
         Hotel existedHotel = hotelService.findById(hotelId);
         Double totalRating = existedHotel.getRating() * existedHotel.getCountReview();
         totalRating = totalRating - existedHotel.getRating() + rate;
-        existedHotel.setRating(totalRating / existedHotel.getCountReview());
+        if (existedHotel.getCountReview() != 0) {
+            existedHotel.setRating(totalRating / existedHotel.getCountReview());
+        } else {
+            existedHotel.setRating(totalRating);
+        }
         existedHotel.setCountReview(existedHotel.getCountReview() + 1);
         hotelService.save(existedHotel);
         return ResponseEntity.ok(hotelMapper.hotelToResponse(existedHotel));

@@ -1,11 +1,15 @@
 package com.example.booking.web.model;
 
+import com.example.booking.entity.Booking;
+import com.example.booking.entity.Hotel;
+import com.example.booking.entity.UnavailableDates;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.Instant;
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -24,7 +28,10 @@ public class RoomResponse {
 
     private Integer capacity;
 
-    private LocalDate unavailableFrom;
+    private Hotel hotel;
 
-    private LocalDate unavailableTo;
+    private Set<UnavailableDates> dateSet;
+
+    private List<Booking> bookings;
+
 }

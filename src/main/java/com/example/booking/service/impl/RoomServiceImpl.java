@@ -1,19 +1,41 @@
 package com.example.booking.service.impl;
 
+import com.example.booking.entity.Hotel;
 import com.example.booking.entity.Room;
 import com.example.booking.exception.EntityNotFoundException;
+import com.example.booking.mapper.RoomMapper;
+import com.example.booking.repository.HotelRepository;
+import com.example.booking.repository.HotelSpecification;
 import com.example.booking.repository.RoomRepository;
+import com.example.booking.repository.RoomSpecification;
+import com.example.booking.service.HotelService;
 import com.example.booking.service.RoomService;
 import com.example.booking.utils.BeanUtils;
+import com.example.booking.web.model.RoomRequest;
+import com.example.booking.web.model.filter.RoomFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class RoomServiceImpl implements RoomService {
 
     private final RoomRepository repository;
+
+    private final HotelService hotelService;
+
+    private final RoomMapper roomMapper;
+
+
+    @Override
+    public List<Room> filterBy(RoomFilter filter) {
+        return repository.findAll(RoomSpecification.withFilter(filter),
+                PageRequest.of(filter.getPageNumber(), filter.getPageSize())).getContent();
+    }
 
     @Override
     public Room findById(Long id) {
@@ -22,8 +44,11 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public Room save(Room room) {
-        return repository.save(room);
+    public Room save(RoomRequest request) {
+        Room newRoom = roomMapper.requestToRoom(request);
+        Hotel hotel = hotelService.findById(request.getHotelId());
+        newRoom.setHotel(hotel);
+        return repository.save(newRoom);
     }
 
     @Override

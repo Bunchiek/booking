@@ -1,6 +1,5 @@
 package com.example.booking.web.model.filter;
 
-import jakarta.persistence.Column;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

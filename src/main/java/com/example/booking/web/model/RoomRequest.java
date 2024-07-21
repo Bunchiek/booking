@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.Instant;
-import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -17,6 +15,5 @@ public class RoomRequest {
     private Integer number;
     private Double price;
     private Integer capacity;
-    private LocalDate unavailableFrom;
-    private LocalDate unavailableTo;
+    private Long hotelId;
 }
